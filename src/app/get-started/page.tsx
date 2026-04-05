@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { ArrowRight, Instagram, Facebook, Sun, Moon } from 'lucide-react';
 
 const templates = [
@@ -29,6 +30,8 @@ const templates = [
 export default function GetStarted() {
   const [isDark, setIsDark] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<number | null>(null);
+  const pathname = usePathname();
+  const isHome = pathname === '/';
 
   useEffect(() => {
     if (isDark) {
@@ -55,8 +58,8 @@ export default function GetStarted() {
             </Link>
             
             <nav className="flex items-center gap-4">
-              <Link href="#services" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Services</Link>
-              <Link href="#portfolio" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Portfolio</Link>
+              <Link href={isHome ? '#services' : '/#services'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Services</Link>
+              <Link href={isHome ? '#portfolio' : '/#portfolio'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Portfolio</Link>
               <Link href="/get-started" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors font-medium">Get Started</Link>
               <button
                 onClick={() => setIsDark(!isDark)}
@@ -64,7 +67,7 @@ export default function GetStarted() {
               >
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
-              <Link href="#contact" className="px-5 py-2.5 bg-[#7B2FBE] text-white font-medium rounded-xl hover:bg-[#9B4FDE] hover:shadow-lg transition-all">
+              <Link href={isHome ? '#contact' : '/#contact'} className="px-5 py-2.5 bg-[#7B2FBE] text-white font-medium rounded-xl hover:bg-[#9B4FDE] hover:shadow-lg transition-all">
                 Contact Us
               </Link>
             </nav>
