@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Instagram, Facebook, Sun, Moon } from 'lucide-react';
+import { loadStripe } from '@stripe/stripe-js';
 
 const templates = [
   {
@@ -193,10 +194,21 @@ export default function GetStarted() {
                 Select your template above, then pay your deposit below to unlock the website brief form.
               </p>
               
-              <a href="#" style={{ display: 'inline-block', padding: '16px 32px', background: '#7c3aed', color: 'white', fontWeight: 600, borderRadius: 12, textDecoration: 'none', marginBottom: 32 }}>
-                {/* TODO: Stripe deposit link goes here */}
+              <button 
+                onClick={async () => {
+                  const res = await fetch('/api/checkout', { method: 'POST' });
+                  const { sessionId, error } = await res.json();
+                  if (error) {
+                    alert('Failed to create checkout session');
+                    return;
+                  }
+                  const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+                  stripe?.redirectToCheckout({ sessionId });
+                }}
+                style={{ display: 'inline-block', padding: '16px 32px', background: '#7c3aed', color: 'white', fontWeight: 600, borderRadius: 12, textDecoration: 'none', marginBottom: 32, border: 'none', cursor: 'pointer', fontSize: '1rem' }}
+              >
                 Pay Deposit - $748.50
-              </a>
+              </button>
             </div>
             
             <div style={{ position: 'relative', marginTop: 48, borderRadius: 16, overflow: 'hidden' }}>
