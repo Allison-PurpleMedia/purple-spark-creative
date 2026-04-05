@@ -7,50 +7,27 @@ import { usePathname } from 'next/navigation';
 import { Palette, PenTool, Layout, Globe, Mail, MapPin, ArrowRight, Instagram, Facebook, Sun, Moon } from 'lucide-react';
 
 const services = [
-  {
-    icon: Palette,
-    title: 'Branding Kits',
-    description: 'Complete brand identity packages including color palettes, typography, and brand guidelines.',
-  },
-  {
-    icon: PenTool,
-    title: 'Logo Design',
-    description: 'Unique, memorable logos tailored to your business personality and target audience.',
-  },
-  {
-    icon: Layout,
-    title: 'Social Media Graphics',
-    description: 'Eye-catching templates and posts that elevate your social media presence.',
-  },
-  {
-    icon: Globe,
-    title: 'Websites',
-    description: 'Modern, responsive websites that convert visitors into customers.',
-  },
+  { icon: Palette, title: 'Branding Kits', description: 'Complete brand identity packages including color palettes, typography, and brand guidelines.' },
+  { icon: PenTool, title: 'Logo Design', description: 'Unique, memorable logos tailored to your business personality and target audience.' },
+  { icon: Layout, title: 'Social Media Graphics', description: 'Eye-catching templates and posts that elevate your social media presence.' },
+  { icon: Globe, title: 'Websites', description: 'Modern, responsive websites that convert visitors into customers.' },
 ];
 
 const portfolio = [
-  {
-    title: 'Brand Identity',
-    category: 'Branding',
-    image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600',
-  },
-  {
-    title: 'Logo Collection',
-    category: 'Logo Design',
-    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600',
-  },
-  {
-    title: 'Social Campaigns',
-    category: 'Social Media',
-    image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80',
-  },
+  { title: 'Brand Identity', category: 'Branding', image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600' },
+  { title: 'Logo Collection', category: 'Logo Design', image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600' },
+  { title: 'Social Campaigns', category: 'Social Media', image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80' },
 ];
 
 export default function Home() {
   const [isDark, setIsDark] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === '/';
+
+  useEffect(() => {
+    const saved = localStorage.getItem('darkMode');
+    if (saved === 'true') setIsDark(true);
+  }, []);
 
   useEffect(() => {
     if (isDark) {
@@ -61,90 +38,62 @@ export default function Home() {
   }, [isDark]);
 
   return (
-    <div className="min-h-screen bg-[#F5F0FF] dark:bg-[#1A0A2E] transition-colors">
+    <div style={{ minHeight: '100vh', background: isDark ? '#1A0A2E' : '#F5F0FF', transition: 'background 0.3s' }}>
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 glass dark:glass-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            <Link href="/" className="flex items-center gap-3">
-              <Image
-                src="/logo.png"
-                alt="Purple Spark Creative"
-                width={40}
-                height={40}
-                className="h-10 w-auto"
-              />
+      <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: isDark ? 'rgba(26, 10, 46, 0.9)' : 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(12px)', borderBottom: isDark ? '1px solid rgba(123, 47, 190, 0.3)' : '1px solid rgba(123, 47, 190, 0.15)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: isDark ? 80 : 64 }}>
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <Image src="/logo.png" alt="Purple Spark Creative" width={40} height={40} style={{ height: 40, width: 'auto' }} />
             </Link>
-            
-            <nav className="flex items-center gap-4">
-              <Link href={isHome ? '#services' : '/#services'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Services</Link>
-              <Link href={isHome ? '#pricing' : '/#pricing'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Pricing</Link>
-              <Link href={isHome ? '#portfolio' : '/#portfolio'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Portfolio</Link>
-              <Link href="/get-started" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors font-medium">Get Started</Link>
-              <button
-                onClick={() => setIsDark(!isDark)}
-                className="p-2 rounded-lg bg-slate-100 dark:bg-[#7B2FBE] text-slate-700 dark:text-white hover:opacity-80 transition-all"
-              >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            <nav style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              <Link href={isHome ? '#services' : '/#services'} style={{ color: isDark ? '#7B2FBE' : '#475569', textDecoration: 'none' }}>Services</Link>
+              <Link href={isHome ? '#pricing' : '/#pricing'} style={{ color: isDark ? '#7B2FBE' : '#475569', textDecoration: 'none' }}>Pricing</Link>
+              <Link href={isHome ? '#portfolio' : '/#portfolio'} style={{ color: isDark ? '#7B2FBE' : '#475569', textDecoration: 'none' }}>Portfolio</Link>
+              <Link href="/get-started" style={{ color: isDark ? '#7B2FBE' : '#475569', fontWeight: 500, textDecoration: 'none' }}>Get Started</Link>
+              <button onClick={() => { setIsDark(!isDark); localStorage.setItem('darkMode', (!isDark).toString()); }} style={{ padding: 8, borderRadius: 8, background: isDark ? '#7B2FBE' : '#f1f5f9', color: isDark ? 'white' : '#475569', border: 'none', cursor: 'pointer' }}>
+                {isDark ? <Sun size={20} /> : <Moon size={20} />}
               </button>
-              <Link href={isHome ? '#contact' : '/#contact'} className="px-5 py-2.5 bg-[#7B2FBE] text-white font-medium rounded-xl hover:bg-[#9B4FDE] hover:shadow-lg transition-all">
-                Contact Us
-              </Link>
+              <Link href={isHome ? '#contact' : '/#contact'} style={{ padding: '10px 20px', background: '#7B2FBE', color: 'white', fontWeight: 500, borderRadius: 12, textDecoration: 'none' }}>Contact Us</Link>
             </nav>
           </div>
         </div>
       </header>
 
-      <main className="pt-20">
+      <main style={{ paddingTop: 80 }}>
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-32 bg-[#F5F0FF] dark:bg-[#1A0A2E]">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#F5F0FF] to-white dark:from-[#2D1B4E] dark:to-[#1A0A2E]" />
-          <div className="absolute top-20 -left-20 w-80 h-80 bg-[#7B2FBE]/20 rounded-full blur-3xl opacity-50" />
-          <div className="absolute bottom-20 -right-20 w-96 h-96 bg-[#00D4FF]/20 rounded-full blur-3xl opacity-50" />
-          
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <section style={{ position: 'relative', overflow: 'hidden', padding: '120px 0', background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 50%, #a855f7 100%)' }}>
+          <div style={{ position: 'absolute', inset: 0 }} />
+          <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 48, alignItems: 'center' }}>
               <div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-6 shadow-sm bg-white/80 text-[#7B2FBE] dark:bg-[#2D1B4E] dark:text-[#00D4FF]">
-                  <span className="w-2 h-2 bg-[#00D4FF] rounded-full animate-pulse-soft" />
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 16px', borderRadius: 9999, fontSize: '0.875rem', background: 'rgba(255,255,255,0.2)', color: 'white', marginBottom: 24 }}>
+                  <span style={{ width: 8, height: 8, background: '#00D4FF', borderRadius: '50%' }} />
                   Created for you
                 </div>
-                
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
-                  We Create{' '}
-                  <span className="bg-gradient-to-r from-[#7B2FBE] to-[#00D4FF] bg-clip-text text-transparent">
-                    Beautiful Brands
-                  </span>
-                  {' '}for Small Businesses
+                <h1 style={{ fontSize: '3rem', fontWeight: 700, color: 'white', marginBottom: 24, lineHeight: 1.2 }}>
+                  We Create Beautiful Brands for Small Businesses
                 </h1>
-                
-                <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-lg">
+                <p style={{ fontSize: '1.125rem', color: 'rgba(255,255,255,0.9)', marginBottom: 32, maxWidth: 500 }}>
                   Brand kits, logo design, and social media graphics for small to medium sized business owners in Australia, New Zealand & USA.
                 </p>
-                
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="#contact" className="px-8 py-4 bg-[#7B2FBE] text-white font-semibold rounded-xl hover:bg-[#9B4FDE] hover:shadow-xl transition-all flex items-center justify-center gap-2">
-                    Contact Us Now
-                    <ArrowRight className="w-5 h-5" />
+                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                  <Link href="#contact" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 32px', background: 'white', color: '#7c3aed', fontWeight: 600, borderRadius: 12, textDecoration: 'none' }}>
+                    Contact Us Now <ArrowRight size={20} />
                   </Link>
-                  <Link href="#portfolio" className="px-8 py-4 bg-white text-[#7B2FBE] font-semibold rounded-xl border-2 border-[#7B2FBE] hover:bg-[#F5F0FF] hover:shadow-lg transition-all flex items-center justify-center dark:bg-[#2D1B4E] dark:text-white dark:border-[#7B2FBE] dark:hover:bg-[#3D2B5E]">
+                  <Link href="#portfolio" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 32px', background: 'transparent', color: 'white', fontWeight: 600, borderRadius: 12, border: '2px solid white', textDecoration: 'none' }}>
                     View Portfolio
                   </Link>
                 </div>
               </div>
-              
-              <div className="relative">
-                <div className="aspect-square max-w-lg mx-auto relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#7B2FBE]/20 to-[#00D4FF]/20 rounded-3xl rotate-3" />
-                  <div className="absolute inset-0 bg-white dark:bg-[#2D1B4E] rounded-3xl shadow-2xl overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800" 
-                      alt="Creative design" 
-                      className="w-full h-full object-cover"
-                    />
+              <div style={{ position: 'relative' }}>
+                <div style={{ position: 'relative', aspectRatio: '1', maxWidth: 500, margin: '0 auto' }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(123,47,190,0.2) 0%, rgba(0,212,255,0.2) 100%)', borderRadius: 32, transform: 'rotate(3deg)' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'white', borderRadius: 32, overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800" alt="Creative design" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
-                  <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-[#7B2FBE] to-[#00D4FF] rounded-2xl shadow-xl flex items-center justify-center animate-float">
-                    <Palette className="w-10 h-10 text-white" />
+                  <div style={{ position: 'absolute', bottom: -16, left: -16, width: 96, height: 96, background: 'linear-gradient(135deg, #7c3aed 0%, #00d4ff 100%)', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}>
+                    <Palette size={40} color="white" />
                   </div>
                 </div>
               </div>
@@ -153,27 +102,20 @@ export default function Home() {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-20 bg-white dark:bg-[#1A0A2E]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Our Services</h2>
-              <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-                Everything you need to build a professional brand presence
-              </p>
+        <section id="services" style={{ padding: '80px 0', background: isDark ? '#1f2937' : 'white' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', marginBottom: 16 }}>Our Services</h2>
+              <p style={{ color: isDark ? '#9ca3af' : '#64748b', maxWidth: 600, margin: '0 auto' }}>Everything you need to build a professional brand presence</p>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {services.map((service, index) => (
-                <div 
-                  key={service.title}
-                  className="group p-6 bg-[#F5F0FF] dark:bg-[#2D1B4E] rounded-2xl border border-[#7B2FBE]/20 dark:border-[#7B2FBE]/30 hover:border-[#7B2FBE] dark:hover:border-[#00D4FF] hover:shadow-xl transition-all"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="w-14 h-14 bg-gradient-to-br from-[#7B2FBE]/20 to-[#00D4FF]/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <service.icon className="w-7 h-7 text-[#7B2FBE]" />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 24 }}>
+              {services.map((service) => (
+                <div key={service.title} style={{ padding: 24, background: isDark ? '#374151' : '#f5f0ff', borderRadius: 16, border: '1px solid rgba(123, 47, 190, 0.2)' }}>
+                  <div style={{ width: 56, height: 56, background: 'linear-gradient(135deg, rgba(123,47,190,0.2) 0%, rgba(0,212,255,0.2) 100%)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+                    <service.icon size={28} color="#7c3aed" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{service.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-300 text-sm">{service.description}</p>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: isDark ? 'white' : '#1e293b', marginBottom: 8 }}>{service.title}</h3>
+                  <p style={{ color: isDark ? '#9ca3af' : '#64748b', fontSize: '0.875rem' }}>{service.description}</p>
                 </div>
               ))}
             </div>
@@ -181,58 +123,33 @@ export default function Home() {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" style={{ background: 'linear-gradient(135deg, #f5f0ff 0%, #ffffff 100%)', padding: '80px 0' }}>
+        <section id="pricing" style={{ padding: '80px 0', background: isDark ? '#1f2937' : '#f5f0ff' }}>
           <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
             <div style={{ textAlign: 'center', marginBottom: 48 }}>
-              <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#1e293b', marginBottom: 16 }}>Website Design Pricing</h2>
-              <p style={{ color: '#64748b', maxWidth: 600, margin: '0 auto' }}>
-                Simple, transparent pricing for your new website
-              </p>
+              <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', marginBottom: 16 }}>Website Design Pricing</h2>
+              <p style={{ color: isDark ? '#9ca3af' : '#64748b', maxWidth: 600, margin: '0 auto' }}>Simple, transparent pricing for your new website</p>
             </div>
-            
             <div style={{ maxWidth: 600, margin: '0 auto' }}>
-              <div style={{
-                background: 'white',
-                borderRadius: 24,
-                boxShadow: '0 20px 60px rgba(124, 58, 237, 0.15)',
-                border: '2px solid #7c3aed',
-                padding: 48
-              }}>
+              <div style={{ background: isDark ? '#374151' : 'white', borderRadius: 24, boxShadow: '0 20px 60px rgba(124, 58, 237, 0.15)', border: '2px solid #7c3aed', padding: 48 }}>
                 <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                  <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: 8 }}>Starting at</p>
-                  <p style={{ fontSize: 56, fontWeight: 800, color: '#7c3aed' }}>
-                    From $<span>{/* TODO: UPDATE PRICE HERE - e.g. 997 */}</span>
-                  </p>
+                  <p style={{ fontSize: '0.875rem', color: isDark ? '#9ca3af' : '#94a3b8', marginBottom: 8 }}>Starting at</p>
+                  <p style={{ fontSize: 56, fontWeight: 800, color: '#7c3aed' }}>From $1,497</p>
                 </div>
-                
-                <ul style={{ marginBottom: 24 }}>
+                <ul style={{ marginBottom: 24, listStyle: 'none', padding: 0 }}>
                   {['Custom website design', 'Mobile responsive', 'Up to 5 pages', 'Contact form', 'Social media links', 'Basic SEO setup', '7 day post-launch support'].map((item) => (
-                    <li key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, color: '#475569', marginBottom: 12 }}>
-                      <svg style={{ width: 20, height: 20, color: '#7c3aed', flexShrink: 0 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                      </svg>
+                    <li key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, color: isDark ? '#e5e7eb' : '#475569', marginBottom: 12 }}>
+                      <svg style={{ width: 20, height: 20, color: '#7c3aed', flexShrink: 0 }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
                       {item}
                     </li>
                   ))}
                 </ul>
-                
-                <div style={{ background: '#f5f0ff', borderRadius: 12, padding: 20, marginTop: 24 }}>
-                  <p style={{ fontSize: '0.875rem', color: '#475569', fontWeight: 500, textAlign: 'center' }}>
-                    50% deposit required to commence
-                  </p>
-                  <p style={{ fontSize: '0.875rem', color: '#475569', fontWeight: 500, textAlign: 'center', marginTop: 8 }}>
-                    Remaining 50% due on completion
-                  </p>
+                <div style={{ background: isDark ? '#1f2937' : '#f5f0ff', borderRadius: 12, padding: 20, marginTop: 24 }}>
+                  <p style={{ fontSize: '0.875rem', color: isDark ? '#9ca3af' : '#475569', fontWeight: 500, textAlign: 'center' }}>50% deposit required to commence</p>
+                  <p style={{ fontSize: '0.875rem', color: isDark ? '#9ca3af' : '#475569', fontWeight: 500, textAlign: 'center', marginTop: 8 }}>Remaining 50% due on completion</p>
                 </div>
-                
                 <div style={{ display: 'flex', gap: 16, marginTop: 32, flexWrap: 'wrap' }}>
-                  <a href="#" style={{ flex: 1, background: '#7c3aed', color: 'white', padding: '14px 28px', borderRadius: 8, fontWeight: 600, border: 'none', cursor: 'pointer', textDecoration: 'none', textAlign: 'center', minWidth: 150 }}>
-                    {/* TODO: Stripe deposit link goes here */}
-                    Pay Deposit Now
-                  </a>
-                  <Link href="/get-started" style={{ flex: 1, background: 'transparent', color: '#7c3aed', padding: '14px 28px', borderRadius: 8, fontWeight: 600, border: '2px solid #7c3aed', cursor: 'pointer', textDecoration: 'none', textAlign: 'center', minWidth: 150 }}>
-                    Get Started
-                  </Link>
+                  <a href="#" style={{ flex: 1, background: '#7c3aed', color: 'white', padding: '14px 28px', borderRadius: 8, fontWeight: 600, border: 'none', cursor: 'pointer', textDecoration: 'none', textAlign: 'center', minWidth: 150 }}>Pay Deposit Now</a>
+                  <Link href="/get-started" style={{ flex: 1, background: 'transparent', color: '#7c3aed', padding: '14px 28px', borderRadius: 8, fontWeight: 600, border: '2px solid #7c3aed', cursor: 'pointer', textDecoration: 'none', textAlign: 'center', minWidth: 150 }}>Get Started</Link>
                 </div>
               </div>
             </div>
@@ -240,32 +157,26 @@ export default function Home() {
         </section>
 
         {/* Portfolio Section */}
-        <section id="portfolio" className="py-20 bg-[#F5F0FF] dark:bg-[#1A0A2E]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-12">
+        <section id="portfolio" style={{ padding: '80px 0', background: isDark ? '#1f2937' : 'white' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 48, flexWrap: 'wrap', gap: 16 }}>
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">Our Work</h2>
-                <p className="text-slate-600 dark:text-slate-300">Recent projects we&apos;ve worked on</p>
+                <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', marginBottom: 8 }}>Our Work</h2>
+                <p style={{ color: isDark ? '#9ca3af' : '#64748b' }}>Recent projects we've worked on</p>
               </div>
-              <Link href="#" className="hidden md:flex items-center gap-2 text-[#7B2FBE] font-medium hover:gap-3 transition-all dark:text-[#00D4FF]">
-                View All Projects
-                <ArrowRight className="w-5 h-5" />
+              <Link href="#" style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#7c3aed', fontWeight: 500, textDecoration: 'none' }}>
+                View All Projects <ArrowRight size={20} />
               </Link>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
               {portfolio.map((item) => (
-                <div key={item.title} className="group bg-white dark:bg-[#2D1B4E] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img 
-                      src={item.image} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                <div key={item.title} style={{ background: isDark ? '#374151' : '#f5f0ff', borderRadius: 16, overflow: 'hidden', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
+                  <div style={{ aspectRatio: '4/3', overflow: 'hidden' }}>
+                    <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
-                  <div className="p-5">
-                    <p className="text-sm text-[#7B2FBE] font-medium mb-1">{item.category}</p>
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{item.title}</h3>
+                  <div style={{ padding: 20 }}>
+                    <p style={{ fontSize: '0.875rem', color: '#7c3aed', fontWeight: 500, marginBottom: 4 }}>{item.category}</p>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: 600, color: isDark ? 'white' : '#1e293b' }}>{item.title}</h3>
                   </div>
                 </div>
               ))}
@@ -273,43 +184,32 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="py-20 bg-white dark:bg-[#1A0A2E]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="order-2 lg:order-1">
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-                  We Help Small Businesses{' '}
-                  <span className="text-[#7B2FBE]">Stand Out</span>
-                </h2>
-                <p className="text-slate-600 dark:text-slate-300 mb-6">
-                  At Purple Spark Creative, we specialize in creating memorable brand experiences for small to medium sized businesses across Australia, New Zealand, and the USA.
-                </p>
-                <p className="text-slate-600 dark:text-slate-300 mb-8">
-                  Whether you need a complete brand kit, a distinctive logo, engaging social media graphics, or a modern website - we bring your vision to life with creativity and strategy.
-                </p>
-                <div className="flex gap-6">
-                  <div className="text-center">
-                    <p className="text-3xl font-bold text-[#7B2FBE]">200+</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Clients Served</p>
+        {/* About/Stats Section */}
+        <section style={{ padding: '80px 0', background: 'linear-gradient(135deg, #6d28d9 0%, #7c3aed 50%, #a855f7 100%)' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 48, alignItems: 'center' }}>
+              <div>
+                <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'white', marginBottom: 24 }}>We Help Small Businesses <span style={{ color: '#00D4FF' }}>Stand Out</span></h2>
+                <p style={{ color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}>At Purple Spark Creative, we specialize in creating memorable brand experiences for small to medium sized businesses across Australia, New Zealand, and the USA.</p>
+                <p style={{ color: 'rgba(255,255,255,0.9)', marginBottom: 32 }}>Whether you need a complete brand kit, a distinctive logo, engaging social media graphics, or a modern website - we bring your vision to life with creativity and strategy.</p>
+                <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontSize: '2rem', fontWeight: 700, color: 'white' }}>200+</p>
+                    <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)' }}>Clients Served</p>
                   </div>
-                  <div className="text-center">
-                    <p className="text-3xl font-bold text-[#7B2FBE]">500+</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Projects Completed</p>
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontSize: '2rem', fontWeight: 700, color: 'white' }}>500+</p>
+                    <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)' }}>Projects Completed</p>
                   </div>
-                  <div className="text-center">
-                    <p className="text-3xl font-bold text-[#7B2FBE]">98%</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">Satisfaction Rate</p>
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontSize: '2rem', fontWeight: 700, color: 'white' }}>98%</p>
+                    <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)' }}>Satisfaction Rate</p>
                   </div>
                 </div>
               </div>
-              <div className="order-1 lg:order-2 relative">
-                <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
-                  <img 
-                    src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800" 
-                    alt="Logo designs" 
-                    className="w-full h-full object-cover"
-                  />
+              <div>
+                <div style={{ aspectRatio: '4/3', borderRadius: 24, overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}>
+                  <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800" alt="Logo designs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               </div>
             </div>
@@ -317,60 +217,48 @@ export default function Home() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 bg-gradient-to-r from-[#7B2FBE] to-[#00D4FF]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <section id="contact" style={{ padding: '80px 0', background: isDark ? '#111827' : 'white' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ background: isDark ? '#1f2937' : 'white', borderRadius: 32, padding: 48, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', border: isDark ? '1px solid #374151' : '1px solid #e2e8f0' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 48 }}>
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Let&apos;s Create Something Beautiful</h2>
-                  <p className="text-slate-600 mb-8">
-                    Ready to elevate your brand? Get in touch and we&apos;ll help you create a visual identity that sets you apart.
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-[#7B2FBE]/10 rounded-xl flex items-center justify-center">
-                        <Mail className="w-5 h-5 text-[#7B2FBE]" />
+                  <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', marginBottom: 16 }}>Let's Create Something Beautiful</h2>
+                  <p style={{ color: isDark ? '#9ca3af' : '#64748b', marginBottom: 32 }}>Ready to elevate your brand? Get in touch and we'll help you create a visual identity that sets you apart.</p>
+                  <div style={{ marginBottom: 24 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                      <div style={{ width: 48, height: 48, background: 'rgba(123, 47, 190, 0.1)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Mail size={20} color="#7c3aed" />
                       </div>
                       <div>
-                        <p className="text-sm text-slate-500">Email</p>
-                        <p className="font-medium text-slate-900">allison@purplesparkcreative.com</p>
+                        <p style={{ fontSize: '0.875rem', color: isDark ? '#9ca3af' : '#64748b' }}>Email</p>
+                        <p style={{ fontWeight: 500, color: isDark ? 'white' : '#1e293b' }}>allison@purplesparkcreative.com</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-[#00D4FF]/10 rounded-xl flex items-center justify-center">
-                        <MapPin className="w-5 h-5 text-[#00D4FF]" />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                      <div style={{ width: 48, height: 48, background: 'rgba(0, 212, 255, 0.1)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <MapPin size={20} color="#00D4FF" />
                       </div>
                       <div>
-                        <p className="text-sm text-slate-500">Service Area</p>
-                        <p className="font-medium text-slate-900">Australia, New Zealand & USA</p>
+                        <p style={{ fontSize: '0.875rem', color: isDark ? '#9ca3af' : '#64748b' }}>Service Area</p>
+                        <p style={{ fontWeight: 500, color: isDark ? 'white' : '#1e293b' }}>Australia, New Zealand & USA</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                
-                <form className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Name</label>
-                      <input 
-                        type="text" 
-                        placeholder="Your name"
-                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7B2FBE] focus:border-transparent"
-                      />
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: isDark ? '#9ca3af' : '#475569', marginBottom: 8 }}>Name</label>
+                      <input type="text" placeholder="Your name" style={{ width: '100%', padding: '12px 16px', background: isDark ? '#374151' : '#f8fafc', border: isDark ? '1px solid #4b5563' : '1px solid #e2e8f0', borderRadius: 12, fontSize: '1rem', color: isDark ? 'white' : '#1e293b' }} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Email</label>
-                      <input 
-                        type="email" 
-                        placeholder="your@email.com"
-                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7B2FBE] focus:border-transparent"
-                      />
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: isDark ? '#9ca3af' : '#475569', marginBottom: 8 }}>Email</label>
+                      <input type="email" placeholder="your@email.com" style={{ width: '100%', padding: '12px 16px', background: isDark ? '#374151' : '#f8fafc', border: isDark ? '1px solid #4b5563' : '1px solid #e2e8f0', borderRadius: 12, fontSize: '1rem', color: isDark ? 'white' : '#1e293b' }} />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Service Interested In</label>
-                    <select className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7B2FBE] focus:border-transparent">
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: isDark ? '#9ca3af' : '#475569', marginBottom: 8 }}>Service Interested In</label>
+                    <select style={{ width: '100%', padding: '12px 16px', background: isDark ? '#374151' : '#f8fafc', border: isDark ? '1px solid #4b5563' : '1px solid #e2e8f0', borderRadius: 12, fontSize: '1rem', color: isDark ? 'white' : '#1e293b' }}>
                       <option>Branding Kit</option>
                       <option>Logo Design</option>
                       <option>Social Media Graphics</option>
@@ -379,19 +267,10 @@ export default function Home() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Message</label>
-                    <textarea 
-                      rows={4}
-                      placeholder="Tell us about your project..."
-                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7B2FBE] focus:border-transparent resize-none"
-                    />
+                    <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: isDark ? '#9ca3af' : '#475569', marginBottom: 8 }}>Message</label>
+                    <textarea rows={4} placeholder="Tell us about your project..." style={{ width: '100%', padding: '12px 16px', background: isDark ? '#374151' : '#f8fafc', border: isDark ? '1px solid #4b5563' : '1px solid #e2e8f0', borderRadius: 12, fontSize: '1rem', color: isDark ? 'white' : '#1e293b', resize: 'vertical' }} />
                   </div>
-                  <button 
-                    type="submit"
-                    className="w-full py-4 bg-[#7B2FBE] text-white font-semibold rounded-xl hover:bg-[#9B4FDE] hover:shadow-xl transition-all"
-                  >
-                    Send Message
-                  </button>
+                  <button type="submit" style={{ width: '100%', padding: '16px 32px', background: '#7c3aed', color: 'white', fontWeight: 600, borderRadius: 12, border: 'none', cursor: 'pointer', fontSize: '1rem' }}>Send Message</button>
                 </form>
               </div>
             </div>
@@ -400,51 +279,36 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#1A0A2E] dark:bg-[#0D0518] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-3 mb-4">
-                <Image
-                  src="/logo.png"
-                  alt="Purple Spark Creative"
-                  width={40}
-                  height={40}
-                  className="h-10 w-auto"
-                />
+      <footer style={{ background: '#1A0A2E', padding: '48px 0' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32 }}>
+            <div style={{ gridColumn: 'span 2' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                <Image src="/logo.png" alt="Purple Spark Creative" width={40} height={40} style={{ height: 40, width: 'auto' }} />
               </div>
-              <p className="text-slate-400 mb-4">
-                Creating beautiful brands for small businesses across Australia, New Zealand & USA.
-              </p>
-              <div className="flex gap-4">
-                <a href="https://facebook.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-800 dark:bg-[#7B2FBE] hover:bg-[#7B2FBE] rounded-lg flex items-center justify-center transition-colors">
-                  <Facebook className="w-5 h-5" />
-                </a>
-                <a href="https://instagram.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-800 dark:bg-[#7B2FBE] hover:bg-[#7B2FBE] rounded-lg flex items-center justify-center transition-colors">
-                  <Instagram className="w-5 h-5" />
-                </a>
+              <p style={{ color: '#94a3b8', marginBottom: 16 }}>Creating beautiful brands for small businesses across Australia, New Zealand & USA.</p>
+              <div style={{ display: 'flex', gap: 16 }}>
+                <a href="https://facebook.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" style={{ width: 40, height: 40, background: '#334155', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Facebook size={20} /></a>
+                <a href="https://instagram.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" style={{ width: 40, height: 40, background: '#334155', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Instagram size={20} /></a>
               </div>
             </div>
-            
             <div>
-              <h4 className="font-semibold mb-4 text-white">Services</h4>
-              <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Branding Kits</a></li>
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Logo Design</a></li>
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Social Media</a></li>
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Websites</a></li>
+              <h4 style={{ fontWeight: 600, color: 'white', marginBottom: 16 }}>Services</h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Branding Kits</a></li>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Logo Design</a></li>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Social Media</a></li>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Websites</a></li>
               </ul>
             </div>
-            
             <div>
-              <h4 className="font-semibold mb-4 text-white">Contact</h4>
-              <ul className="space-y-2 text-slate-400">
-                <li>allison@purplesparkcreative.com</li>
+              <h4 style={{ fontWeight: 600, color: 'white', marginBottom: 16 }}>Contact</h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ color: '#94a3b8' }}>allison@purplesparkcreative.com</li>
               </ul>
             </div>
           </div>
-          
-          <div className="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
+          <div style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid #334155', textAlign: 'center', color: '#64748b', fontSize: '0.875rem' }}>
             <p>&copy; 2026 Purple Spark Creative. All rights reserved.</p>
           </div>
         </div>

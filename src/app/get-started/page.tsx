@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ArrowRight, Instagram, Facebook, Sun, Moon } from 'lucide-react';
+import { Instagram, Facebook, Sun, Moon } from 'lucide-react';
 
 const templates = [
   {
@@ -27,11 +27,25 @@ const templates = [
   },
 ];
 
+const steps = [
+  { num: 1, title: 'Choose Your Template', desc: 'Browse our 3 professionally designed templates and pick the style that suits your brand' },
+  { num: 2, title: 'Pay Your Deposit', desc: 'A 50% deposit of $748.50 secures your spot and kicks off the project' },
+  { num: 3, title: 'Fill Out Your Brief', desc: "Once your deposit is confirmed, you'll get access to our website brief form to tell us all about your business" },
+  { num: 4, title: 'We Build & Present', desc: 'We design your website based on your chosen template and brief, then present it to you for review' },
+  { num: 5, title: 'Review & Refine', desc: 'You get up to 3 rounds of edits to make sure everything is perfect' },
+  { num: 6, title: 'Pay Balance & Go Live', desc: "Once you approve the final design and pay the remaining 50% ($748.50), we deploy your site on Cloudflare and send you your login details" },
+];
+
 export default function GetStarted() {
   const [isDark, setIsDark] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<number | null>(null);
   const pathname = usePathname();
   const isHome = pathname === '/';
+
+  useEffect(() => {
+    const saved = localStorage.getItem('darkMode');
+    if (saved === 'true') setIsDark(true);
+  }, []);
 
   useEffect(() => {
     if (isDark) {
@@ -42,33 +56,33 @@ export default function GetStarted() {
   }, [isDark]);
 
   return (
-    <div className="min-h-screen bg-[#F5F0FF] dark:bg-[#1A0A2E] transition-colors">
+    <div style={{ minHeight: '100vh', background: isDark ? '#1A0A2E' : '#F5F0FF', transition: 'background 0.3s' }}>
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 glass dark:glass-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            <Link href="/" className="flex items-center gap-3">
+      <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, background: isDark ? 'rgba(26, 10, 46, 0.9)' : 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(12px)', borderBottom: isDark ? '1px solid rgba(123, 47, 190, 0.3)' : '1px solid rgba(123, 47, 190, 0.15)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: isDark ? 80 : 64 }}>
+            <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <Image
                 src="/logo.png"
                 alt="Purple Spark Creative"
                 width={40}
                 height={40}
-                className="h-10 w-auto"
+                style={{ height: 40, width: 'auto' }}
               />
             </Link>
             
-            <nav className="flex items-center gap-4">
-              <Link href={isHome ? '#services' : '/#services'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Services</Link>
-              <Link href={isHome ? '#pricing' : '/#pricing'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Pricing</Link>
-              <Link href={isHome ? '#portfolio' : '/#portfolio'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Portfolio</Link>
-              <Link href="/get-started" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors font-medium">Get Started</Link>
+            <nav style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              <Link href={isHome ? '#services' : '/#services'} style={{ color: isDark ? '#7B2FBE' : '#475569', transition: 'color 0.2s' }}>Services</Link>
+              <Link href={isHome ? '#pricing' : '/#pricing'} style={{ color: isDark ? '#7B2FBE' : '#475569', transition: 'color 0.2s' }}>Pricing</Link>
+              <Link href={isHome ? '#portfolio' : '/#portfolio'} style={{ color: isDark ? '#7B2FBE' : '#475569', transition: 'color 0.2s' }}>Portfolio</Link>
+              <Link href="/get-started" style={{ color: isDark ? '#7B2FBE' : '#475569', fontWeight: 500, transition: 'color 0.2s' }}>Get Started</Link>
               <button
-                onClick={() => setIsDark(!isDark)}
-                className="p-2 rounded-lg bg-slate-100 dark:bg-[#7B2FBE] text-slate-700 dark:text-white hover:opacity-80 transition-all"
+                onClick={() => { setIsDark(!isDark); localStorage.setItem('darkMode', (!isDark).toString()); }}
+                style={{ padding: 8, borderRadius: 8, background: isDark ? '#7B2FBE' : '#f1f5f9', color: isDark ? 'white' : '#475569', border: 'none', cursor: 'pointer' }}
               >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                {isDark ? <Sun size={20} /> : <Moon size={20} />}
               </button>
-              <Link href={isHome ? '#contact' : '/#contact'} className="px-5 py-2.5 bg-[#7B2FBE] text-white font-medium rounded-xl hover:bg-[#9B4FDE] hover:shadow-lg transition-all">
+              <Link href={isHome ? '#contact' : '/#contact'} style={{ padding: '10px 20px', background: '#7B2FBE', color: 'white', fontWeight: 500, borderRadius: 12, textDecoration: 'none' }}>
                 Contact Us
               </Link>
             </nav>
@@ -76,55 +90,90 @@ export default function GetStarted() {
         </div>
       </header>
 
-      <main className="pt-20">
+      <main style={{ paddingTop: 80 }}>
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-24 bg-[#F5F0FF] dark:bg-[#1A0A2E]">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#F5F0FF] to-white dark:from-[#2D1B4E] dark:to-[#1A0A2E]" />
-          <div className="absolute top-20 -left-20 w-80 h-80 bg-[#7B2FBE]/20 rounded-full blur-3xl opacity-50" />
-          <div className="absolute bottom-20 -right-20 w-96 h-96 bg-[#00D4FF]/20 rounded-full blur-3xl opacity-50" />
+        <section style={{ position: 'relative', overflow: 'hidden', padding: '80px 0', background: isDark ? '#1A0A2E' : 'linear-gradient(135deg, #f5f0ff 0%, #ffffff 100%)' }}>
+          <div style={{ position: 'absolute', inset: 0, background: isDark ? 'linear-gradient(135deg, #2D1B4E 0%, #1A0A2E 100%)' : 'linear-gradient(135deg, #f5f0ff 0%, #ffffff 100%)' }} />
+          <div style={{ position: 'absolute', top: 80, left: -80, width: 320, height: 320, background: 'rgba(123, 47, 190, 0.2)', borderRadius: '50%', filter: 'blur(60px)', opacity: 0.5 }} />
+          <div style={{ position: 'absolute', bottom: 80, right: -80, width: 384, height: 384, background: 'rgba(0, 212, 255, 0.2)', borderRadius: '50%', filter: 'blur(60px)', opacity: 0.5 }} />
           
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+          <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
+            <h1 style={{ fontSize: '3rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', marginBottom: 24, lineHeight: 1.2 }}>
               Start Your Website Journey
             </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-              Choose your template and fill out the form below — we&apos;ll take it from there.
+            <p style={{ fontSize: '1.125rem', color: isDark ? '#cbd5e1' : '#64748b', maxWidth: 600, margin: '0 auto' }}>
+              Simple, transparent process — from template to live website
+            </p>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section style={{ padding: '80px 0', background: isDark ? '#1A0A2E' : 'white' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', textAlign: 'center', marginBottom: 48 }}>How It Works</h2>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
+              {steps.map((step) => (
+                <div key={step.num} style={{ padding: 32, background: isDark ? '#2D1B4E' : '#f5f0ff', borderRadius: 16, border: '1px solid rgba(123, 47, 190, 0.2)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+                    <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg, #7c3aed 0%, #00d4ff 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700, fontSize: '1.25rem' }}>
+                      {step.num}
+                    </div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: isDark ? 'white' : '#1e293b' }}>{step.title}</h3>
+                  </div>
+                  <p style={{ color: isDark ? '#cbd5e1' : '#64748b', lineHeight: 1.6 }}>{step.desc}</p>
+                </div>
+              ))}
+            </div>
+            
+            <p style={{ textAlign: 'center', marginTop: 32, color: isDark ? '#94a3b8' : '#64748b', fontSize: '0.875rem' }}>
+              After launch, you receive 7 days of support. After that, your website is fully yours to manage.
             </p>
           </div>
         </section>
 
         {/* Template Selection */}
-        <section className="py-16 bg-white dark:bg-[#1A0A2E]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white text-center mb-12">
+        <section style={{ padding: '80px 0', background: isDark ? '#1A0A2E' : 'linear-gradient(135deg, #f5f0ff 0%, #ffffff 100%)' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', textAlign: 'center', marginBottom: 48 }}>
               Choose Your Website Template
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
               {templates.map((template) => (
                 <div
                   key={template.id}
                   onClick={() => setSelectedTemplate(template.id)}
-                  className={`group rounded-2xl overflow-hidden transition-all cursor-pointer ${
-                    selectedTemplate === template.id
-                      ? 'ring-4 ring-[#7B2FBE] dark:ring-[#00D4FF] shadow-2xl scale-[1.02]'
-                      : 'border border-[#7B2FBE]/20 dark:border-[#7B2FBE]/30 hover:border-[#7B2FBE] dark:hover:border-[#00D4FF] hover:shadow-xl'
-                  } bg-[#F5F0FF] dark:bg-[#2D1B4E]`}
+                  style={{ 
+                    borderRadius: 16, 
+                    overflow: 'hidden', 
+                    cursor: 'pointer',
+                    border: selectedTemplate === template.id ? '3px solid #7c3aed' : '1px solid rgba(123, 47, 190, 0.2)',
+                    boxShadow: selectedTemplate === template.id ? '0 20px 60px rgba(124, 58, 237, 0.3)' : '0 4px 20px rgba(0, 0, 0, 0.1)',
+                    transform: selectedTemplate === template.id ? 'scale(1.02)' : 'scale(1)',
+                    transition: 'all 0.3s ease',
+                    background: isDark ? '#2D1B4E' : '#f5f0ff'
+                  }}
                 >
-                  {/* Placeholder Thumbnail */}
-                  <div className={`h-48 bg-gradient-to-br ${template.thumbnail} flex items-center justify-center`}>
-                    <span className="text-white/80 text-4xl font-bold">{template.id}</span>
+                  <div style={{ height: 200, background: `linear-gradient(135deg, ${template.thumbnail.split(' ')[1]} 0%, ${template.thumbnail.split(' ')[3]} 100%)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '3rem', fontWeight: 700 }}>{template.id}</span>
                   </div>
                   
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{template.name}</h3>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm mb-4">{template.description}</p>
+                  <div style={{ padding: 24 }}>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: isDark ? 'white' : '#1e293b', marginBottom: 8 }}>{template.name}</h3>
+                    <p style={{ color: isDark ? '#cbd5e1' : '#64748b', fontSize: '0.875rem', marginBottom: 16 }}>{template.description}</p>
                     <button
-                      className={`w-full py-3 rounded-xl font-medium transition-all ${
-                        selectedTemplate === template.id
-                          ? 'bg-[#7B2FBE] text-white dark:bg-[#00D4FF] dark:text-[#1A0A2E]'
-                          : 'bg-white dark:bg-[#1A0A2E] text-[#7B2FBE] border-2 border-[#7B2FBE] dark:border-[#7B2FBE] dark:text-white hover:bg-[#7B2FBE] hover:text-white dark:hover:bg-[#00D4FF] dark:hover:text-[#1A0A2E] dark:hover:border-[#00D4FF]'
-                      }`}
+                      style={{
+                        width: '100%',
+                        padding: '12px 24px',
+                        borderRadius: 12,
+                        fontWeight: 600,
+                        border: selectedTemplate === template.id ? 'none' : '2px solid #7c3aed',
+                        background: selectedTemplate === template.id ? '#7c3aed' : 'transparent',
+                        color: selectedTemplate === template.id ? 'white' : '#7c3aed',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
                     >
                       {selectedTemplate === template.id ? 'Selected' : 'Select This Template'}
                     </button>
@@ -135,71 +184,90 @@ export default function GetStarted() {
           </div>
         </section>
 
-        {/* Aidaform Embed */}
-        <section className="py-16 bg-[#F5F0FF] dark:bg-[#1A0A2E]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white text-center mb-8">
-              Tell Us About Your Website
-            </h2>
+        {/* Deposit & Form Section */}
+        <section style={{ padding: '80px 0', background: isDark ? '#1A0A2E' : 'white' }}>
+          <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ background: isDark ? '#2D1B4E' : 'white', borderRadius: 24, padding: 48, boxShadow: '0 20px 60px rgba(124, 58, 237, 0.15)', border: '2px solid #7c3aed', textAlign: 'center' }}>
+              <h2 style={{ fontSize: '2rem', fontWeight: 700, color: isDark ? 'white' : '#1e293b', marginBottom: 16 }}>Ready to Get Started?</h2>
+              <p style={{ color: isDark ? '#cbd5e1' : '#64748b', marginBottom: 32, maxWidth: 500, margin: '0 auto 32px' }}>
+                Select your template above, then pay your deposit below to unlock the website brief form.
+              </p>
+              
+              <a href="#" style={{ display: 'inline-block', padding: '16px 32px', background: '#7c3aed', color: 'white', fontWeight: 600, borderRadius: 12, textDecoration: 'none', marginBottom: 32 }}>
+                {/* TODO: Stripe deposit link goes here */}
+                Pay Deposit - $748.50
+              </a>
+            </div>
             
-            <div className="bg-white dark:bg-[#2D1B4E] rounded-2xl overflow-hidden shadow-xl">
+            <div style={{ position: 'relative', marginTop: 48, borderRadius: 16, overflow: 'hidden' }}>
               <iframe
                 src="https://purplemediagroup.aidaform.com/purple-media-group-ai-website-design"
                 width="100%"
-                style={{ border: 'none', minHeight: '900px' }}
+                style={{ border: 'none', minHeight: '900px', filter: 'blur(4px)', pointerEvents: 'none', opacity: 0.5 }}
                 title="Website Design Form"
               />
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.3)', padding: 32 }}>
+                <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+                <p style={{ color: 'white', fontSize: '1.25rem', fontWeight: 600, textAlign: 'center', maxWidth: 400 }}>
+                  Complete your deposit payment above to unlock the brief form
+                </p>
+              </div>
             </div>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#1A0A2E] dark:bg-[#0D0518] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center gap-3 mb-4">
+      <footer style={{ background: '#1A0A2E', padding: '48px 0' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32 }}>
+            <div style={{ gridColumn: 'span 2' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
                 <Image
                   src="/logo.png"
                   alt="Purple Spark Creative"
                   width={40}
                   height={40}
-                  className="h-10 w-auto"
+                  style={{ height: 40, width: 'auto' }}
                 />
               </div>
-              <p className="text-slate-400 mb-4">
+              <p style={{ color: '#94a3b8', marginBottom: 16 }}>
                 Creating beautiful brands for small businesses across Australia, New Zealand & USA.
               </p>
-              <div className="flex gap-4">
-                <a href="https://facebook.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-800 dark:bg-[#7B2FBE] hover:bg-[#7B2FBE] rounded-lg flex items-center justify-center transition-colors">
-                  <Facebook className="w-5 h-5" />
+              <div style={{ display: 'flex', gap: 16 }}>
+                <a href="https://facebook.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" style={{ width: 40, height: 40, background: '#334155', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Facebook size={20} />
                 </a>
-                <a href="https://instagram.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-slate-800 dark:bg-[#7B2FBE] hover:bg-[#7B2FBE] rounded-lg flex items-center justify-center transition-colors">
-                  <Instagram className="w-5 h-5" />
+                <a href="https://instagram.com/purplesparkcreative" target="_blank" rel="noopener noreferrer" style={{ width: 40, height: 40, background: '#334155', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Instagram size={20} />
                 </a>
               </div>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4 text-white">Services</h4>
-              <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Branding Kits</a></li>
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Logo Design</a></li>
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Social Media</a></li>
-                <li><a href="#" className="hover:text-[#00D4FF] transition-colors">Websites</a></li>
+              <h4 style={{ fontWeight: 600, color: 'white', marginBottom: 16 }}>Services</h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Branding Kits</a></li>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Logo Design</a></li>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Social Media</a></li>
+                <li style={{ marginBottom: 8 }}><a href="#" style={{ color: '#94a3b8', textDecoration: 'none' }}>Websites</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4 text-white">Contact</h4>
-              <ul className="space-y-2 text-slate-400">
-                <li>allison@purplesparkcreative.com</li>
+              <h4 style={{ fontWeight: 600, color: 'white', marginBottom: 16 }}>Contact</h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ color: '#94a3b8' }}>allison@purplesparkcreative.com</li>
               </ul>
             </div>
           </div>
           
-          <div className="mt-12 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
+          <div style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid #334155', textAlign: 'center', color: '#64748b', fontSize: '0.875rem' }}>
             <p>&copy; 2026 Purple Spark Creative. All rights reserved.</p>
           </div>
         </div>
