@@ -78,6 +78,7 @@ export default function Home() {
             
             <nav className="flex items-center gap-4">
               <Link href={isHome ? '#services' : '/#services'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Services</Link>
+              <Link href={isHome ? '#pricing' : '/#pricing'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Pricing</Link>
               <Link href={isHome ? '#portfolio' : '/#portfolio'} className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Portfolio</Link>
               <Link href="/get-started" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors font-medium">Get Started</Link>
               <button
@@ -175,6 +176,65 @@ export default function Home() {
                   <p className="text-slate-600 dark:text-slate-300 text-sm">{service.description}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section id="pricing" style={{ background: 'linear-gradient(135deg, #f5f0ff 0%, #ffffff 100%)', padding: '80px 0' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <h2 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#1e293b', marginBottom: 16 }}>Website Design Pricing</h2>
+              <p style={{ color: '#64748b', maxWidth: 600, margin: '0 auto' }}>
+                Simple, transparent pricing for your new website
+              </p>
+            </div>
+            
+            <div style={{ maxWidth: 600, margin: '0 auto' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: 24,
+                boxShadow: '0 20px 60px rgba(124, 58, 237, 0.15)',
+                border: '2px solid #7c3aed',
+                padding: 48
+              }}>
+                <div style={{ textAlign: 'center', marginBottom: 24 }}>
+                  <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: 8 }}>Starting at</p>
+                  <p style={{ fontSize: 56, fontWeight: 800, color: '#7c3aed' }}>
+                    From $<span>{/* TODO: UPDATE PRICE HERE - e.g. 997 */}</span>
+                  </p>
+                </div>
+                
+                <ul style={{ marginBottom: 24 }}>
+                  {['Custom website design', 'Mobile responsive', 'Up to 5 pages', 'Contact form', 'Social media links', 'Basic SEO setup', '7 day post-launch support'].map((item) => (
+                    <li key={item} style={{ display: 'flex', alignItems: 'center', gap: 12, color: '#475569', marginBottom: 12 }}>
+                      <svg style={{ width: 20, height: 20, color: '#7c3aed', flexShrink: 0 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                
+                <div style={{ background: '#f5f0ff', borderRadius: 12, padding: 20, marginTop: 24 }}>
+                  <p style={{ fontSize: '0.875rem', color: '#475569', fontWeight: 500, textAlign: 'center' }}>
+                    50% deposit required to commence
+                  </p>
+                  <p style={{ fontSize: '0.875rem', color: '#475569', fontWeight: 500, textAlign: 'center', marginTop: 8 }}>
+                    Remaining 50% due on completion
+                  </p>
+                </div>
+                
+                <div style={{ display: 'flex', gap: 16, marginTop: 32, flexWrap: 'wrap' }}>
+                  <a href="#" style={{ flex: 1, background: '#7c3aed', color: 'white', padding: '14px 28px', borderRadius: 8, fontWeight: 600, border: 'none', cursor: 'pointer', textDecoration: 'none', textAlign: 'center', minWidth: 150 }}>
+                    {/* TODO: Stripe deposit link goes here */}
+                    Pay Deposit Now
+                  </a>
+                  <Link href="/get-started" style={{ flex: 1, background: 'transparent', color: '#7c3aed', padding: '14px 28px', borderRadius: 8, fontWeight: 600, border: '2px solid #7c3aed', cursor: 'pointer', textDecoration: 'none', textAlign: 'center', minWidth: 150 }}>
+                    Get Started
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
