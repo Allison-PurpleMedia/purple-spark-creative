@@ -152,7 +152,7 @@ export default function Home() {
         </section>
 
         {/* Services Section */}
-        <section className="py-20 bg-white dark:bg-[#1A0A2E]">
+        <section id="services" className="py-20 bg-white dark:bg-[#1A0A2E]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Our Services</h2>
@@ -180,7 +180,7 @@ export default function Home() {
         </section>
 
         {/* Portfolio Section */}
-        <section className="py-20 bg-[#F5F0FF] dark:bg-[#1A0A2E]">
+        <section id="portfolio" className="py-20 bg-[#F5F0FF] dark:bg-[#1A0A2E]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-12">
               <div>
