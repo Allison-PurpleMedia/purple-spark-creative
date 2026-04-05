@@ -76,6 +76,7 @@ export default function Home() {
             <nav className="flex items-center gap-4">
               <Link href="#services" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Services</Link>
               <Link href="#portfolio" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors">Portfolio</Link>
+              <Link href="/get-started" className="text-slate-600 dark:text-[#7B2FBE] hover:text-[#7B2FBE] dark:hover:text-[#00D4FF] transition-colors font-medium">Get Started</Link>
               <button
                 onClick={() => setIsDark(!isDark)}
                 className="p-2 rounded-lg bg-slate-100 dark:bg-[#7B2FBE] text-slate-700 dark:text-white hover:opacity-80 transition-all"
